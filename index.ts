@@ -151,6 +151,137 @@ if(typeof val === "string"){
 
 }
 }
-//=============================================================================================================================================
-//=============================================================================================================================================
 
+
+//Descriminated unions=============================================================================================================================================
+type Circle ={
+    type:"circle"
+    radius:number
+}
+type Square ={
+    type:"square"
+    width:number
+    height:number
+}
+
+type Shape = Circle | Square
+
+function test2(val:Shape){
+    if(val.type === "square"){  // type narrowing use discriminated union
+        console.log(val.width)
+    }else
+    if(val.type === "circle"){
+        console.log(val.radius)
+    }
+}
+
+
+//interSection types=============================================================================================================================================
+type  Point2D ={
+    x:number
+    y:number
+
+}
+/*  normal type create   1
+type  Point3D ={
+    x:number
+    y:number
+    z:number
+}
+*/
+
+//use intersection  (ints like two type merge) 2
+type  Point3D = Point2D &{
+    z:number
+}
+
+
+//Interface=============================================================================================================================================
+interface Point2D_1{ // interface same type
+    x:number
+    y:number
+}
+interface Point3D_1 extends Point2D_1{ // interface merge use extend keyword
+    z:number
+
+}
+
+
+
+//Generics=============================================================================================================================================
+//1 scenario
+
+type CustomType<T> = T
+type CustomType_2<K> = K[]   // reusable type
+
+let myName_1:CustomType<string> = "www"
+let myArray_1:CustomType_2<string> = ["ss","ss"]
+
+
+
+//2 method
+type  myObject<T> ={
+    name: string,
+    age:number,
+    data:T
+}
+interface  myObject_2<T>{
+    name: string,
+    age:number,
+    data:T
+}
+
+// we can use type or interface we can see same out put
+
+let human_1:myObject<string> = {
+    name: "Vishan",
+    age:1,
+    data:"ddd"
+}
+let human_2:myObject<number> = {
+    name: "VishMee",
+    age:1,
+    data:3
+}
+
+type Point = {
+    x:number
+    y:number
+}
+
+let human_3:myObject<Point> = {
+    name: "Chathuranga",
+    age:1,
+    data:{
+        x:1,
+        y:2
+    }
+}
+
+//Generics use to function ================================================================================================================
+
+//1 Array
+function returnArray<T>(arr: T[]):T[]{
+    return arr
+}
+
+/*
+function returnArray<T>(arr: T[]):T[]{
+    return arr
+}
+
+let returnArray_2 = <T>(arr: T[]):T[] =>{
+    return arr
+}
+arrow funtion this is short type fucntion 2 function are same
+
+
+*/
+
+/*
+returnArray<number>([1,2,3,4]);
+returnArray<string>(["sss","sss","222"]);
+*/
+
+returnArray([1,2,3,4]);
+returnArray(["sss","sss","222"]);
